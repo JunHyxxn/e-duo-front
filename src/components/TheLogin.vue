@@ -30,6 +30,11 @@
               >
                 로그인
               </v-btn>
+              <v-img
+                src="@/assets/kakao_login_medium_wide.png"
+                class="social-login mb-3"
+                max-height="44px"
+              ></v-img>
               <div class="text-center">
                 <v-chip class="ma-2" label> ID찾기 </v-chip>
                 <v-chip class="ma-2" label>
@@ -73,4 +78,7 @@ export default {
 </script>
 
 <style>
+.social-login {
+  border-radius: 4px;
+}
 </style>
