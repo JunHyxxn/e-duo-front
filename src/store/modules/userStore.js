@@ -26,11 +26,14 @@ const userStore = {
         user,
         (res) => { 
           if (res.status === 200) {
-            let accessToken = res.data["access-token"];
-            let refreshToken = res.data["refresh-token"];
+            let accessToken = res.data.accessToken;
+            let refreshToken = res.data.refreshToken;
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_VALID_TOKEN", true);
-            commit("SET_USER_INFO", user);
+            userInfo.userId = res.data.userId;
+            userInfo.name = res.data.name;
+            userInfo.role = res.data.role;
+            commit("SET_USER_INFO", userInfo);
             localStorage.setItem("access-token", accessToken);
             localStorage.setItem("refresh-token", refreshToken);
           } else {
