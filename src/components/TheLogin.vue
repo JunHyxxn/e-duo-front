@@ -30,11 +30,19 @@
               >
                 로그인
               </v-btn>
-              <v-img
-                src="@/assets/kakao_login_medium_wide.png"
-                class="social-login mb-3"
-                max-height="44px"
-              ></v-img>
+              <v-btn
+                type="submit"
+                depressed
+                large
+                block
+                class="d-flex justify-space-between mb-3"
+                color="#FEE500"
+                text-col
+              >
+                <v-icon color="#000000" class="align-left">mdi-chat</v-icon>
+                카카오 로그인
+                <span></span>
+              </v-btn>
               <div class="text-center">
                 <v-chip class="ma-2" label> ID찾기 </v-chip>
                 <v-chip class="ma-2" label>
@@ -80,5 +88,5 @@ export default {
 <style>
 .social-login {
   border-radius: 4px;
-}
+} 
 </style>
