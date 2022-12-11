@@ -1,6 +1,7 @@
 import router from "@/router";
 import {
   socialLogin,
+  login,
 } from "@/api/user"
 
 const userStore = {
@@ -27,15 +28,33 @@ const userStore = {
     },
   },
   actions : {
+    async userConfirm({ commit }, user) {
+      await login(
+        user,
+        (res) => { 
+          if (res.status === 200) {
+            let accessToken = res.data.accessToken;
+            let refreshToken = res.data.refreshToken;
+            commit("SET_IS_LOGIN", true);
+            commit("SET_IS_VALID_TOKEN", true);
+            let user = {};
+            user.userId = res.data.userId;
+            user.name = res.data.name;
+            user.role = res.data.role;
+            commit("SET_USER_INFO", user);
+            localStorage.setItem("access-token", accessToken);
+            localStorage.setItem("refresh-token", refreshToken);
+          } else {
+            commit("SET_IS_LOGIN", false);
+            commit("SET_IS_VALID_TOKEN", false);
+          }
+        },
+        (err) => { console.log(err); })
+    },
     async socialLogin({ commit }, accessToken) {
-      let config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
       console.log("여기옴");
       socialLogin(
-        config,
+        accessToken,
         ( response ) => {
           if(response.status === 200) {
             // 소셜 로그인 성공
@@ -46,23 +65,25 @@ const userStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            let user = null;
+            let user = {};
+            console.log(response);
             user.name = response.data.name;
             user.userId = response.data.userId;
             user.role = response.data.role;
             commit("SET_USER_INFO", user);
+          } else {
+            alert("2000 말고 다른거 뜸");
           }
         },
         (error) => {
-          if(error.status === 400) {
-            let user = null;
-            user.name = error.data.name;
-            user.domain = error.data.domain;
-            user.password = error.data.password;
+          if(error.response.status === 400) {
+            let user = {};
+            user.userId = error.response.data.userId;
+            user.password = error.response.data.password;
             commit("SET_USER_INFO", user);
             router.push("/login/role");
           } else {
-            alert("소셜 로그인 아이디를 확인해주세요!");
+            alert("소셜 로그인 아이디!");
           }
         }
       );
