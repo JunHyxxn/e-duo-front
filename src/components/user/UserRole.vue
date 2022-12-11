@@ -36,20 +36,10 @@
                 <router-link
                   :to="{
                     name: 'SignUpForm',
-                    params: { role: this.role, type: 'basic' },
+                    params: { role: this.role },
                   }"
                 >
-                  로그인
-                </router-link>
-              </v-col>
-              <v-col align="center">
-                <router-link
-                  :to="{
-                    name: 'SignUpForm',
-                    params: { role: this.role, type: 'social' },
-                  }"
-                >
-                  소셜로그인
+                  회원가입
                 </router-link>
               </v-col>
             </v-row>

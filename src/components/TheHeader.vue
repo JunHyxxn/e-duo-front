@@ -7,13 +7,13 @@
       <v-toolbar-title class="mx-right-2">E-Duo</v-toolbar-title>
     </router-link>
     <v-toolbar-items>
-      <router-link to="/home">
+      <router-link to="/student">
         <v-btn plain height="100%"> 학생관리 </v-btn>
       </router-link>
       <router-link to="/notice">
         <v-btn plain height="100%"> 공지사항 </v-btn>
       </router-link>
-      <router-link to="/news">
+      <router-link to="/video">
         <v-btn plain height="100%"> 영상관리 </v-btn>
       </router-link>
       <router-link to="/qna">
