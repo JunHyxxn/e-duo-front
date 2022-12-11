@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link to="/login/role">회원가입</router-link>
-    <v-btn @click="socialLogin">소셜로그인</v-btn>
+    <v-btn @click="social">소셜로그인</v-btn>
   </div>
 </template>
 
@@ -13,18 +13,21 @@ export default {
   },
   methods: {
     ...mapActions('userStore', ["socialLogin", "userConfirm"]),
-    socialLogin() {
+    social() {
       window.Kakao.Auth.login({
         scope: "profile_nickname, account_email",
         success: (authObj) => {
           let token = authObj["access_token"];
           console.log(token);
-          console.log(authObj["access_token"]);
           this.gosocial(token);
           if(this.isLogin) {
             this.$router.push("/main"); // 메인 페이지로 이동
           } else {
-            alert("소셜 로그인 아이디가 잘못되었습니다!");
+            if(this.userInfo.userId != null) {
+              this.$router.push("/login/role")
+            } else {
+              alert("카카오톡과 통신 중 오류가 발생했습니다!");
+            }
           }
         },
       });

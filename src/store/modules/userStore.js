@@ -3,7 +3,7 @@ import {
   socialLogin,
 } from "@/api/user"
 
-const memberStore = {
+const userStore = {
   namespaced: true,
   state : {
     isLogin: false,
@@ -28,8 +28,14 @@ const memberStore = {
   },
   actions : {
     async socialLogin({ commit }, accessToken) {
+      let config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+      console.log("여기옴");
       socialLogin(
-        accessToken,
+        config,
         ( response ) => {
           if(response.status === 200) {
             // 소셜 로그인 성공
@@ -64,4 +70,4 @@ const memberStore = {
   }
 }
 
-export default memberStore;
+export default userStore;
