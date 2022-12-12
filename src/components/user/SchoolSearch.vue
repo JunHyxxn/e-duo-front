@@ -12,7 +12,7 @@
                 <v-col>
                     <div class="d-flex">
                         <v-text-field
-                            v-model="school_name" 
+                            v-model="schoolName" 
                             label="학교명" 
                             required
                             @keyup.enter="searchSchool"
@@ -66,19 +66,22 @@
 </template>
 
 <script>
-import http from "@/api/http";
+import { 
+    getApiInstance,
+} from "@/api/index"
+const api = getApiInstance();
 export default {
     props : {
-        user_school : String,
+        userSchool : String,
         setModalOn : Function
     },
     watch:{
-        user_school :function(){
-            console.log(this.user_school)
+        userSchool :function(){
+            console.log(this.userSchool)
         }
     },
     data: () => ({
-        school_name: '',
+        schoolName: '',
         schools: [],
     }),
 
@@ -92,22 +95,19 @@ export default {
                 this.searchSchool();
             }
         },
-        searchSchool(){
-            console.log(this.school_name.length);
+        async searchSchool(){
             this.schools = [];
             const SERVICE_URL = 
-                `https://open.neis.go.kr/hub/schoolInfo?key=bdbf6ceb247640308638aa55bdd26bef&type=json&schul_nm=${this.school_name}`;
-            http
+                `https://open.neis.go.kr/hub/schoolInfo?key=bdbf6ceb247640308638aa55bdd26bef&type=json&schul_nm=${this.schoolName}`;
+            await api
                 .get(SERVICE_URL)
                 .then(({data}) => {
                     // console.log(data.schoolInfo[1].row);
                     data.schoolInfo[1].row.forEach((school)=>{
-                        // console.log(school.ORG_RDNMA);
-                        // console.log(school.SCHUL_NM);
-                        this.schools.push({address: school.ORG_RDNMA, name: school.SCHUL_NM});
+                    this.schools.push({address: school.ORG_RDNMA, name: school.SCHUL_NM});
                     })
                 })
-                console.log(this.schools);
+                // console.log(this.schools);
         },
         handleClick(row){
             console.log('클릭했음', row);
@@ -130,10 +130,10 @@ export default {
         })
 
         document.querySelector(".schoolSearch").addEventListener('keypress', function(e){
-            console.log(e);
-            if(e.key === 'Enter' && this.school_name.length!=0){
-                console.log('hit');
-                this.searchSchool(this.school_name);
+            // console.log(e);
+            if(e.key === 'Enter' && this.schoolName.length!=0){
+                // console.log('hit');
+                this.searchSchool(this.schoolName);
             }
         })
     }

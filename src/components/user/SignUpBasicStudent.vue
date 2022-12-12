@@ -13,9 +13,9 @@
                     </v-col>
                     <v-col cols="12">
                         <v-text-field 
-                            v-model="user_name" 
+                            v-model="userName" 
                             label="이름" 
-                            :rules="user_name_rule" 
+                            :rules="userName_rule" 
                             required
                             append-icon=mdi-account-plus
                             outlined
@@ -23,20 +23,21 @@
                         ></v-text-field>
                     </v-col>
                 </v-row>
-                <v-row>
+                <v-row v-if="this.userInfo==null">
                     <v-col cols="12">
                         <div class="d-flex">
                             <v-text-field 
                                 class='email-placeholder'
-                                v-model="user_email" 
+                                :disabled="finalValidateUserEmail" 
+                                v-model="userEmail" 
                                 label="이메일을 입력하세요" 
-                                :rules="user_email_rule"
+                                :rules="userEmail_rule"
                                 outlined
                             ></v-text-field>
                             <v-btn 
                                 class="ml-3"
-                                :disabled="!isIdFormat"
-                                v-on:click="checkDuplicate"
+                                :disabled="!isIdFormat || finalValidateUserEmail"
+                                v-on:click="get_certificate_email"
                                 x-large 
                                 color="#62929E"
                                 >계정 확인
@@ -44,26 +45,58 @@
                         </div>
                     </v-col>
                 </v-row>
-                <v-row>
+                <v-row v-else>
+                    <v-col cols="12">
+                        <div class="d-flex">
+                            <v-text-field 
+                                class='email-placeholder'
+                                disabled
+                                v-model="this.userInfo.userId"
+                                outlined
+                            ></v-text-field>
+                            <v-btn 
+                                class="ml-3"
+                                :disabled="!isIdFormat || finalValidateUserEmail"
+                                v-on:click="get_certificate_email"
+                                x-large 
+                                color="#62929E"
+                                >카카오 계정
+                            </v-btn>  
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row v-if="this.emailCertificationCopy">
+                    <v-col cols="12">
+                        <v-text-field 
+                            v-model="userEmailCheck" 
+                            label="이메일로 전송된 인증번호를 입력하세요" 
+                            :disabled="finalValidateUserEmail" 
+                            filled
+                            append-icon=mdi-send
+                            @click:append='confirmEmail'
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row v-if="this.userInfo==null">
                     <v-col cols="12" >
                         <v-text-field 
-                            v-model="user_pw" 
+                            v-model="userPw" 
                             label="비밀번호" 
                             :type="show ? 'text' : 'password'" 
-                            :rules="user_pw_rule"
+                            :rules="userPw_rule"
                             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                             @click:append="show=!show"
                             outlined
                         ></v-text-field>
                     </v-col>
                 </v-row>
-                <v-row>
+                <v-row v-if="this.userInfo==null">
                     <v-col cols="12">
                         <v-text-field 
-                            v-model="user_pw_chk" 
+                            v-model="userPwChk" 
                             label="비밀번호 재확인" 
                             :type="show2 ? 'text' : 'password'" 
-                            :rules="user_pw_rule2"
+                            :rules="userPw_rule2"
                             :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                             @click:append="show2=!show2"
                             outlined
@@ -76,16 +109,17 @@
                         <div class="d-flex">
                             <v-text-field 
                                 class='phone-placeholder'
-                                v-model="user_phone" 
+                                :disabled="finalValidateUserPhone"
+                                v-model="userPhone" 
                                 label="휴대전화" 
-                                :rules="user_phone_rule"
+                                :rules="userPhone_rule"
                                 placeholder="'-'를 제외하고 입력하세요"
                                 outlined
                             ></v-text-field>
                             <v-btn 
                                 class="ml-3"
-                                :disabled="!isPhoneFormat"
-                                v-on:click="get_certificate"
+                                :disabled="!isPhoneFormat || finalValidateUserPhone"
+                                v-on:click="get_certificate_phone"
                                 x-large 
                                 color="#62929E"
                                 >인증번호 받기
@@ -93,13 +127,15 @@
                         </div>
                     </v-col>
                 </v-row>
-                <v-row v-if="certificationNumber">
+                <v-row v-if="this.phoneCertificationCopy">
                     <v-col cols="12">
                         <v-text-field 
-                            v-model="user_phone_check" 
-                            label="인증번호를 입력하세요" 
-                            :disabled="!isPhoneFormat || !phone_check" 
+                            v-model="userPhoneCheck" 
+                            label="휴대전화로 전송된 인증번호를 입력하세요" 
+                            :disabled="finalValidateUserPhone" 
                             filled
+                            append-icon=mdi-send
+                            @click:append='confirmPhone'
                         ></v-text-field>
                     </v-col>
                 </v-row>
@@ -107,11 +143,11 @@
                     <v-col cols="12">
                         <div class="d-flex">
                             <v-text-field 
-                                v-model="user_school" 
+                                v-model="userSchool" 
                                 label="학교명" 
                                 disabled
                                 required
-                                :rules="user_school_rule"
+                                :rules="userSchool_rule"
                                 outlined
                             ></v-text-field>
                             <v-btn 
@@ -128,12 +164,12 @@
                 <v-row>
                     <v-col cols="12">
                         <v-select
-                            v-model="user_grade"
+                            v-model="userGrade"
                             label="학년"
                             :items="gradeList"
                             item-text="grade"
                             item-value="value"
-                            :rules="user_grade_rule"
+                            :rules="userGrade_rule"
                             required
                             outlined
                         ></v-select>
@@ -143,7 +179,7 @@
                     <v-col cols="12">
                         <v-radio-group
                             class="pb-2"
-                            v-model="user_parent"
+                            v-model="userParent"
                             row
                             dense
                         >
@@ -158,9 +194,9 @@
                         </v-radio-group>
                         <v-text-field 
                             class='phone-placeholder'
-                            v-model="user_parent_phone" 
+                            v-model="userParentPhone" 
                             label="부모님 휴대전화" 
-                            :rules="user_parent_phone_rule"
+                            :rules="userParentPhone_rule"
                             placeholder="'-'를 제외하고 입력하세요"
                             outlined
                         ></v-text-field>
@@ -203,16 +239,16 @@
                             </v-menu>
                     </v-col>
                 </v-row>
-                <v-btn @click="signUp" :disabled="!isFormValid">회원가입</v-btn>
+                <v-btn @click="signUp" :disabled="!isFormValid || !finalValidateUserPhone || !finalValidateUserEmail">회원가입</v-btn>
                 <div v-if="isModalOn" class='modal-background'>
-                    <school-search class='school-modal-container' :user_school="user_school" :setModalOn="setModalOn" @setSchool="setSchool"></school-search>
+                    <school-search class='school-modal-container' :userSchool="userSchool" :setModalOn="setModalOn" @setSchool="setSchool"></school-search>
                 </div>
             </v-card>
         </v-container>
     </v-form>
 </template>
 <script>
-import http from "@/api/http";
+import { mapState, mapActions } from "vuex";
 import SchoolSearch from "@/components/user/SchoolSearch.vue"
 export default {
     name: "SignUpBasicStudent",
@@ -222,63 +258,74 @@ export default {
     computed: {
         computedDateFormatted () {
             return this.formatDate(this.date)
+        },
+        ...mapState("userStore", ["emailCertification", "phoneCertification", "userInfo"]),
+    },
+    created(){
+        console.log('create', this.userInfo);
+        if(this.userInfo){
+            this.userEmail = this.userInfo.userId;
+            this.finalValidateUserEmail = true;
         }
     },
     watch:{
         date (val) {
-            this.user_birth = val;
-            console.log(this.user_birth);
+            this.userBirth = val;
+            // console.log(this.userBirth);
             this.dateFormatted = this.formatDate(this.date)
-        }
+        },
     },
     data() {
         return {
-            certificationNumber: '',
             isModalOn:false,
             dialog: false,
             state: 'ins',
             isIdFormat : false,
-            phone_check : false,
             isPhoneFormat : false,
-            user_name: '',
-            user_name_rule: [
+            userName: '',
+            userName_rule: [
                 v => !!v || '이름은 필수 입력사항입니다.',
                 v => !(v && v.length >= 30) || '이름은 30자 이상 입력할 수 없습니다.',
                 v => !/[~!@#$%^&*()_+|<>?:{}]/.test(v) || '이름에는 특수문자를 사용할 수 없습니다.'
             ],
-            user_email: '',
-            user_email_rule: [
+            userEmail: '',
+            userEmail_rule: [
                 v => !!v || '이메일은 필수 입력 사항입니다.',
                 v => /.+@.+/.test(v) || '유효하지 않은 이메일입니다.',
             ],
-            user_pw: '',
+            userEmailCheck: '',
+            emailCertificationCopy: '',
+            finalValidateUserEmail: false,
+            userPw: '',
             show:false,
-            user_pw_chk: '',
+            userPwChk: '',
             show2:false,
-            user_pw_rule: [
+            userPw_rule: [
                 v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
                 v => !(v && v.length < 8) || '패스워드는 8자리 이상 입력하세요',
                 v => !!(v && /[^A-Za-z0-9]/.test(v)) || '하나 이상의 특수 문자가 포함되어야 합니다',
                 v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
             ],
-            user_pw_rule2: [
+            userPw_rule2: [
                 v => this.state === 'ins' ? !!v || '패스워드는 필수 입력사항입니다.' : true,
                 v => !(v && v.length < 8) || '패스워드는 8자리 이상 입력하세요',
                 v => !!(v && /[^A-Za-z0-9]/.test(v)) || '하나 이상의 특수 문자가 포함되어야 합니다',
                 v => !(v && v.length >= 30) || '패스워드는 30자 이상 입력할 수 없습니다.',
-                v => v === this.user_pw || '패스워드가 일치하지 않습니다.'
+                v => v === this.userPw || '패스워드가 일치하지 않습니다.'
             ],
-            user_phone: '',
-            user_phone_rule: [
+            userPhone: '',
+            userPhone_rule: [
                 v => !!v || '휴대폰은 필수 입력 사항입니다.',
                 v => /^(?:(010\d{4})|(070\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '유효하지 않은 번호입니다.',
             ],
-            user_phone_check: '',
-            user_school: '',
-            user_school_rule: [
+            userPhoneCheck: '',
+            phoneCertificationCopy: '',
+            finalValidateUserPhone: false,
+            userSchool: '',
+            userSchool_rule: [
                 v => !!v || '학교명은 필수 입력 사항입니다.',
             ],
-            user_grade: '',
+            userGrade: '',
             gradeList: [
                 {grade: '1학년', value: '1'},
                 {grade: '2학년', value: '2'},
@@ -288,16 +335,16 @@ export default {
                 {grade: '6학년', value: '6'},
                 {grade: 'N수생', value: '7'},
             ],
-            user_grade_rule: [
+            userGrade_rule: [
                 v => !!v || '학년은 필수 선택 사항입니다.'
             ],
-            user_parent: '',
-            user_parent_phone: '',
-            user_parent_phone_rule: [
+            userParent: '',
+            userParentPhone: '',
+            userParentPhone_rule: [
                 v => !!v || '휴대폰은 필수 입력 사항입니다.',
                 v => /^(?:(010\d{4})|(070\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '유효하지 않은 번호입니다.',
             ],
-            user_birth: '',
+            userBirth: null,
             date: new Date().toISOString().substr(0, 10),
             dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
             menu2: false,
@@ -305,21 +352,29 @@ export default {
         }
     },
     methods: {
+        ...mapActions("userStore", ["emailSending", "phoneSending", "signUpStudent"]),
         checkDuplicate(){
             alert("아이디 체크");
         },
-        get_certificate(){
-
-            this.certificationNumber = '1234';
-            alert('인증번호 전송하기');
-            this.phone_check = true;
+        async get_certificate_email(){
+            await this.emailSending(this.userEmail);
+            this.userEmailCheck = '';
+            this.finalValidateUserEmail = false;
+            this.emailCertificationCopy = this.emailCertification;
+        },
+        async get_certificate_phone(){
+            // await this.phoneSending(this.userPhone);
+            this.userPhoneCheck = '';
+            this.finalValidateUserPhone = false;
+            this.phoneCertificationCopy = '1234';
+            // this.phoneCertificationCopy = this.phoneCertification;
         },
         searchSchool(){
             this.isModalOn = true;
             document.documentElement.style.overflow = 'hidden'
         },
         setSchool(name){    
-            this.user_school = name;
+            this.userSchool = name;
         },
         setModalOn(){
             this.isModalOn = !this.isModalOn;
@@ -381,39 +436,51 @@ export default {
             const month = monthName[i];
             return `${year}년 ${month}`;
         },
+        confirmEmail(){
+            console.log(this.userEmailCheck);
+            console.log(this.emailCertificationCopy);
+            if(this.userEmailCheck == this.emailCertificationCopy){
+                alert('확인되었습니다');
+                this.finalValidateUserEmail = true;
+            }else{
+                alert('인증번호가 틀렸습니다.');
+                this.userEmailCheck = '';
+            }
+        },
+        confirmPhone(){
+            if(this.userPhoneCheck == this.phoneCertificationCopy){
+                alert('확인되었습니다');
+                this.finalValidateUserPhone = true;
+            }else{
+                alert('인증번호가 틀렸습니다.');
+                this.userPhoneCheck = '';
+            }
+        },
         async signUp(){
             const validate = this.$refs.form.validate();
             if(validate){
                 // alert("회원가입 실시");
-                console.log(this.user_name);
-                console.log(this.user_email);
-                console.log(this.user_pw);
-                console.log(this.user_phone);
-                console.log(this.$route.params.role);
-                console.log(this.user_school);
-                console.log(this.user_grade);
-                console.log(this.user_parent);
-                console.log(this.user_parent_phone);
-                console.log(this.user_birth);
-
-                http.post('/auth/signup', {
-                    userId: this.user_email,
-                    password: this.user_pw,
-                    name: this.user_name,
-                    phone: this.user_phone,
+                // console.log(this.userName);
+                // console.log(this.userEmail);
+                // console.log(this.userPw);
+                // console.log(this.userPhone);
+                // console.log(this.$route.params.role);
+                // console.log(this.userSchool);
+                // console.log(this.userGrade);
+                // console.log(this.userParent);
+                // console.log(this.userParentPhone);
+                // console.log(this.userBirth);
+                await this.signUpStudent({
+                    userId: this.userEmail,
+                    password: this.userPw,
+                    name: this.userName,
+                    phone: this.userPhone,
                     role: this.$route.params.role,
-                    birthDate: this.user_birth,
-                    schoolName: this.user_school,
-                    grade: this.user_grade,
-                    parent: this.user_parent,
-                    parentPhone: this.user_parent_phone
-                }).then(()=>{
-                    alert("회원가입이 성공했습니다.");
-                    this.$router.push("/main");//메인 페이지로 이동
-                }).catch(()=>{
-                    alert("회원가입에 실패했습니다.");
-                    this.$router.push("/");
-                })
+                    birthDate: this.userBirth,
+                    schoolName: this.userSchool,
+                    grade: this.userGrade,
+                    parent: this.userParent,
+                    parentPhone: this.userParentPhone});
             }
         }
     },

@@ -24,6 +24,15 @@
                   <v-btn
                     fab
                     large
+                    @click="chooseAssistant"
+                    :class="[activeAssistant ? 'colorBtn' : 'white']"
+                    >조교</v-btn
+                  >
+                </v-col>
+                <v-col align="center">
+                  <v-btn
+                    fab
+                    large
                     @click="chooseTeacher"
                     :class="[activeTeacher ? 'colorBtn' : 'white']"
                     >강사</v-btn
@@ -54,6 +63,7 @@ export default {
     return {
       role: 'null',
       activeStudent: false,
+      activeAssistant: false,
       activeTeacher: false,
     };
   },
@@ -61,12 +71,20 @@ export default {
     chooseStudent() {
       this.role = "ROLE_STUDENT";
       this.activeStudent = !this.activeStudent;
+      this.activeAssistant = false;
+      this.activeTeacher = false;
+    },
+    chooseAssistant(){
+      this.role = "ROLE_ASSISTANT";
+      this.activeAssistant = !this.activeAssistant;
+      this.activeStudent = false;
       this.activeTeacher = false;
     },
     chooseTeacher() {
-      this.role = "ROLE_STUDENT";
+      this.role = "ROLE_TEACHER";
       this.activeTeacher = !this.activeTeacher;
       this.activeStudent = false;
+      this.activeAssistant = false;
     },
     signUp(){
       if(this.role=='null'){
@@ -75,6 +93,11 @@ export default {
         if(this.activeStudent){
           this.$router.push({
                     name: 'SignUpBasicStudent',
+                    params: { role: this.role },
+                  })
+        }else if(this.activeAssistant){
+          this.$router.push({
+                    name: 'SignUpBasicAssistant',
                     params: { role: this.role },
                   })
         }else if(this.activeTeacher){

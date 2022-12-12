@@ -141,22 +141,12 @@
                 <v-row>
                     <v-col cols="12" >
                         <v-text-field 
-                            v-model="userSubject" 
-                            label="과목"
+                            v-model="userTeacherUserId" 
+                            label="담당 강사님 계정 입력"
+                            :rules="userTeacherUserId_rule"
+                            append-icon=mdi-account-star
                             outlined
                         ></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="12" >
-                        <v-file-input 
-                            v-model="userImage" 
-                            label="Profile 이미지 업로드"
-                            append-icon=mdi-file-image
-                            prepend-icon=""
-                            accept=".jpg, .jpeg, .png"
-                            outlined
-                        ></v-file-input>
                     </v-col>
                 </v-row>
                 <v-btn @click="signUp" :disabled="!isFormValid || !finalValidateUserPhone || !finalValidateUserEmail">회원가입</v-btn>
@@ -167,7 +157,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
-    name: "SignUpBasicTeacher",
+    name: "SignUpBasicAssistant",
     computed: {
         ...mapState("userStore", ["emailCertification", "phoneCertification", "userInfo"]),
     },
@@ -178,19 +168,6 @@ export default {
             this.finalValidateUserEmail = true;
         }
     },
-    watch:{
-        userImage(val){
-            console.log(this.userInfo);
-            // console.log(this.userInfo.userId);
-            console.log(val);
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                console.log(e);
-                console.log(e.target.result);
-            }
-        }
-    },
-
     data() {
         return {
             dialog: false,
@@ -236,13 +213,15 @@ export default {
             userPhoneCheck: '',
             phoneCertificationCopy: '',
             finalValidateUserPhone: false,
-            userSubject: null,
-            userImage: null,
+            userTeacherUserId: null,
+            userTeacherUserId_rule:[
+                v => !!v || '담당 강사님 계정은 필수 입력 사항입니다.',
+            ],
             isFormValid: false,
         }
     },
     methods: {
-        ...mapActions("userStore", ["emailSending", "phoneSending", "signUpTeacher"]),
+        ...mapActions("userStore", ["emailSending", "phoneSending", "signUpAssistant"]),
         async get_certificate_email(){
             await this.emailSending(this.userEmail);
             this.userEmailCheck = '';
@@ -283,16 +262,15 @@ export default {
                 // console.log(this.userPw);
                 // console.log(this.userPhone);
                 // console.log(this.$route.params.role);
-                // console.log(this.userSubject);
-                // console.log(this.userImage);
-                await this.signUpTeacher({
+                // console.log(this.user_subject);
+                // console.log(this.user_image);
+                await this.signUpAssistant({
                     userId: this.userEmail,
                     password: this.userPw,
                     name: this.userName,
                     phone: this.userPhone,
                     role: this.$route.params.role,
-                    subject: this.userSubject,
-                    imageSrc: this.userImage});
+                    teacherUserId: this.userTeacherUserId});
             }
         }
     },
