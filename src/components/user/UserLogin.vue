@@ -38,11 +38,10 @@
                 class="d-flex justify-space-between mb-3"
                 color="#FEE500"
                 text-col
+                @click="social"
               >
                 <v-icon color="#000000" class="align-left">mdi-chat</v-icon>
-                <v-btn @click="social">
-                  카카오 로그인
-                </v-btn>
+                카카오 로그인
                 <span></span>
               </v-btn>
               <div class="text-center">
@@ -77,10 +76,10 @@ export default {
     };
   },
   computed: {
-    ...mapState('userStore', ["isLogin", "isLoginError", "userInfo"]),
+    ...mapState("userStore", ["isLogin", "isLoginError", "userInfo"]),
   },
   methods: {
-    ...mapActions('userStore', ["socialLogin", "userConfirm"]),
+    ...mapActions("userStore", ["socialLogin", "userConfirm"]),
     social() {
       window.Kakao.Auth.login({
         scope: "profile_nickname, account_email",
@@ -88,11 +87,11 @@ export default {
           let token = authObj["access_token"];
           console.log(token);
           this.gosocial(token);
-          if(this.isLogin) {
+          if (this.isLogin) {
             this.$router.push("/main"); // 메인 페이지로 이동
           } else {
-            if(this.userInfo.userId != null) {
-              this.$router.push("/login/role")
+            if (this.userInfo.userId != null) {
+              this.$router.push("/login/role");
             } else {
               alert("카카오톡과 통신 중 오류가 발생했습니다!");
             }
@@ -114,5 +113,5 @@ export default {
 <style>
 .social-login {
   border-radius: 4px;
-} 
+}
 </style>
