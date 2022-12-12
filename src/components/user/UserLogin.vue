@@ -40,7 +40,7 @@
                 text-col
                 @click="social"
               >
-                <v-icon color="#000000" class="align-left">mdi-chat</v-icon>
+                <v-icon color="#000000">mdi-chat</v-icon>
                 카카오 로그인
                 <span></span>
               </v-btn>
