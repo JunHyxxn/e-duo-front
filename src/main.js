@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
-import router from "./router"
-import axios from 'axios'
 import './style.css'
-Vue.prototype.$axios = axios; //prototype에 axios 추가
+import router from './router'
+import store from './store'
+import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  created() {},
 }).$mount('#app')
+
+window.Kakao.init('61fe0d6fd3c254bbcecb1bf376fa045b') // Kakao Developers에서 요약 정보 -> JavaScript 키

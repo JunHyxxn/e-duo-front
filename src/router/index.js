@@ -1,32 +1,68 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import SignUpBasicTeacher from '../views/SignUpBasicTeacher.vue'
-import SignUpBasicStudent from '../views/SignUpBasicStudent.vue'
-import SchoolSearch from '../components/SchoolSearch'
 
 Vue.use(VueRouter)
 
 const routes = [
-    {
-        path: '/SignUpBasicTeacher',
-        name: 'SignUpBasicTeacher',
-        component : SignUpBasicTeacher
-    },
-    {
-        path: '/SignUpBasicStudent',
-        name: 'SignUpBasicStudent',
-        component : SignUpBasicStudent
-    },
-    {
-        path: '/SchoolSearch',
-        name: 'SchoolSearch',
-        component : SchoolSearch
-    }
-];
+  {
+    path: "/",
+    name: "MainView",
+    redirect: "/login",
+  },
+  {
+    path: "/login",
+    name: "LoginView",
+    component: () => import("@/views/LoginView.vue"),
+    redirect: "",
+    children: [
+      {
+        path: "",
+        name: "UserLogin",
+        component: () => import("@/components/user/UserLogin.vue"),
+      },
+      {
+        path: "role",
+        name: "UserRole",
+        component: () => import("@/components/user/UserRole.vue"),
+      },
+    ]
+  },
+  {
+    path: "/signup",
+    name: "SignUpForm",
+    component: () => import("@/components/user/SignUpForm.vue")
+  },
+  {
+    path: '/signupteacher',
+    name: 'SignUpBasicTeacher',
+    component: () => import('@/components/user/SignUpBasicTeacher.vue')
+  },
+  {
+    path: '/signupstudent',
+    name: 'SignUpBasicStudent',
+    component: () => import('@/components/user/SignUpBasicStudent.vue')
+  },
+  // {
+  //   path: "/course",
+  //   name: "course",
+  //   redirect: "courseList",
+  //   children: [
+  //     {
+  //       path: "/list",
+  //       name: "courseList",
+  //       component: () => import("@/components/course/CourseList.vue")     // 만약 component이름 바뀌면 변경
+  //     },
+  //     {
+  //       path: "/add",
+  //       name: "addCourse",
+  //       component: () => import("@/components/course/AddCourse.vue")
+  //     },  // 이후 추가할 강좌관련 컴포넌트는 여기에 추가
+  //   ]
+  // }
+]
 
 const router = new VueRouter({
-    mode: 'history',
-    routes,
+  routes
 })
 
 export default router
