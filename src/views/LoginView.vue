@@ -3,7 +3,7 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "LoginView",
+};
 </script>
-
-<style></style>
