@@ -1,9 +1,7 @@
-import { getApiInstance } from "@/api";
-
-const api = getApiInstance();
+import axios from "@/api/util/httpUtil";
 
 async function socialLogin(config, success, fail) {
-  await api.post(`/auth/oauthlogin`, config).then(success).catch(fail);
+  await axios.post(`/auth/oauthlogin`, config).then(success).catch(fail);
 }
 
 export {

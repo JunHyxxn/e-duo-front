@@ -9,19 +9,22 @@ const userStore = {
     isLogin: false,
     isLoginError: false,
     isValidToken: false,
-    userInfo: null, // 여기에 회원정보 넣어줄 예정
+    userInfo: { }, // 여기에 회원정보 넣어줄 예정
   },
   getters : {},
   mutations : {
     SET_IS_LOGIN: function (state, isLogin) {
       state.isLogin = isLogin;
     },
+
     SET_IS_LOGIN_ERROR: (state, isLoginError) => {
       state.isLoginError = isLoginError;
     },
+
     SET_IS_VALID_TOKEN: (state, isValidToken) => {
       state.isValidToken = isValidToken;
     },
+
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo;
     },
