@@ -13,7 +13,6 @@ const routes = [
     path: "/login",
     name: "LoginView",
     component: () => import("@/views/LoginView.vue"),
-    redirect: "",
     children: [
       {
         path: "",
@@ -35,15 +34,16 @@ const routes = [
   {
     path: "/course",
     name: "course",
-    redirect: "courseList",
+    component: () => import("@/views/AppCourse.vue"),
+    redirect: "/course/list",
     children: [
       {
-        path: "/list",
+        path: "list",
         name: "courseList",
-        component: () => import("@/components/course/CourseList.vue")     // 만약 component이름 바뀌면 변경
+        component: () => import("@/components/course/CourseList.vue")
       },
       {
-        path: "/add",
+        path: "add",
         name: "addCourse",
         component: () => import("@/components/course/AddCourse.vue")
       },  // 이후 추가할 강좌관련 컴포넌트는 여기에 추가
