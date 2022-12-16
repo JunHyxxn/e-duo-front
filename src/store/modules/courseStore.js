@@ -1,8 +1,8 @@
-import router from "@/router";
-import {
-  socialLogin,
-  login,
-} from "@/api/user"
+// import router from "@/router";
+// import {
+//   socialLogin,
+//   login,
+// } from "@/api/user"
 
 const courseStore = {
   namespaced: true,
