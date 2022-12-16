@@ -34,16 +34,11 @@ const routes = [
   },
   {
     path: "/course",
-    name: "course",
+    component: () => import("@/views/CourseView.vue"),
     redirect: "courseList",
     children: [
       {
-        path: "/list",
-        name: "courseList",
-        component: () => import("@/components/course/CourseList.vue")     // 만약 component이름 바뀌면 변경
-      },
-      {
-        path: "/add",
+        path: "add",
         name: "addCourse",
         component: () => import("@/components/course/AddCourse.vue")
       },  // 이후 추가할 강좌관련 컴포넌트는 여기에 추가
