@@ -111,12 +111,12 @@ const routes = [
       {
         path: "new",
         name: "newAssistant",
-        component: () => import("@/components/teacher/NewAssistant.vue"),
+        component: () => import("@/components/teacher/NewAssistantList.vue"),
       },
       {
         path: "manage",
         name: "originAssistant",
-        component: () => import("@/components/teacher/ManageAssistant.vue"),
+        component: () => import("@/components/teacher/ManageAssistantList.vue"),
       },
     ],
   },
