@@ -32,6 +32,21 @@ const routes = [
     component: () => import("@/components/user/SignUpForm.vue")
   },
   {
+    path: '/signupteacher',
+    name: 'SignUpBasicTeacher',
+    component: () => import('@/components/user/SignUpBasicTeacher.vue')
+  },
+  {
+    path: '/signupassistant',
+    name: 'SignUpBasicAssistant',
+    component: () => import('@/components/user/SignUpBasicAssistant.vue')
+  },
+  {
+    path: '/signupstudent',
+    name: 'SignUpBasicStudent',
+    component: () => import('@/components/user/SignUpBasicStudent.vue')
+  },
+  {
     path: "/course",
     name: "course",
     component: () => import("@/views/AppCourse.vue"),

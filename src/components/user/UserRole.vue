@@ -24,6 +24,15 @@
                   <v-btn
                     fab
                     large
+                    @click="chooseAssistant"
+                    :class="[activeAssistant ? 'colorBtn' : 'white']"
+                    >조교</v-btn
+                  >
+                </v-col>
+                <v-col align="center">
+                  <v-btn
+                    fab
+                    large
                     @click="chooseTeacher"
                     :class="[activeTeacher ? 'colorBtn' : 'white']"
                     >강사</v-btn
@@ -33,14 +42,12 @@
             </v-row>
             <v-row align="center" justify="center" rows="6">
               <v-col align="center">
-                <router-link
-                  :to="{
-                    name: 'SignUpForm',
-                    params: { role: this.role },
-                  }"
+                <v-btn
+                  large
+                  @click="signUp"
                 >
-                  회원가입
-                </router-link>
+                회원가입
+                </v-btn>
               </v-col>
             </v-row>
           </div>
@@ -54,22 +61,53 @@
 export default {
   data() {
     return {
-      role: null,
+      role: 'null',
       activeStudent: false,
+      activeAssistant: false,
       activeTeacher: false,
     };
   },
   methods: {
     chooseStudent() {
-      this.role = "student";
+      this.role = "ROLE_STUDENT";
       this.activeStudent = !this.activeStudent;
+      this.activeAssistant = false;
+      this.activeTeacher = false;
+    },
+    chooseAssistant(){
+      this.role = "ROLE_ASSISTANT";
+      this.activeAssistant = !this.activeAssistant;
+      this.activeStudent = false;
       this.activeTeacher = false;
     },
     chooseTeacher() {
-      this.role = "teacher";
+      this.role = "ROLE_TEACHER";
       this.activeTeacher = !this.activeTeacher;
       this.activeStudent = false;
+      this.activeAssistant = false;
     },
+    signUp(){
+      if(this.role=='null'){
+        alert('직업을 선택하세요');
+      }else{
+        if(this.activeStudent){
+          this.$router.push({
+                    name: 'SignUpBasicStudent',
+                    params: { role: this.role },
+                  })
+        }else if(this.activeAssistant){
+          this.$router.push({
+                    name: 'SignUpBasicAssistant',
+                    params: { role: this.role },
+                  })
+        }else if(this.activeTeacher){
+          this.$router.push({
+                    name: 'SignUpBasicTeacher',
+                    params: { role: this.role },
+                  })
+        }
+      }
+    }
   },
 };
 </script>
