@@ -103,9 +103,22 @@ const routes = [
     component: () => import("@/views/AppTest.vue"),
   },
   {
-    path: "/management-assistant",
-    name: "ManagementAssistant",
-    component: () => import("@/views/AppManagementAssistant.vue"),
+    path: "/manage-assistant",
+    name: "manageAssistant",
+    component: () => import("@/views/AppManageAssistant.vue"),
+    redirect: "/manage-assistant/new",
+    children: [
+      {
+        path: "new",
+        name: "newAssistant",
+        component: () => import("@/components/teacher/NewAssistant.vue"),
+      },
+      {
+        path: "manage",
+        name: "originAssistant",
+        component: () => import("@/components/teacher/ManageAssistant.vue"),
+      },
+    ],
   },
 ];
 
