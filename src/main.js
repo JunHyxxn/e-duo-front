@@ -3,7 +3,8 @@ import App from './App.vue'
 import './style.css'
 import router from './router'
 import store from './store'
-import vuetify from './plugins/vuetify'
+import vuetify from './api/design/vuetify'
+import "@/api/design/fontAwesomeIcon.js";
 
 Vue.config.productionTip = false
 
