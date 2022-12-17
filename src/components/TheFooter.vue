@@ -1,12 +1,18 @@
 <template>
   <v-footer dark padless color="c">
-    <v-card flat tile color="#C6C5B9" class="lighten-1 white--text text-center" width="100%">
+    <v-card
+      flat
+      tile
+      color="#C6C5B9"
+      class="lighten-1 white--text text-center"
+      width="100%"
+    >
       <v-card-text>
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
+        <!-- <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
           <v-icon size="24px">
             {{ icon }}
           </v-icon>
-        </v-btn>
+        </v-btn> -->
       </v-card-text>
 
       <v-card-text class="white--text pt-0">
@@ -19,7 +25,7 @@
 
       <v-divider></v-divider>
 
-      <v-card-text class=" white--text">
+      <v-card-text class="white--text">
         {{ new Date().getFullYear() }} — <strong>E-Duo</strong>
       </v-card-text>
     </v-card>
@@ -27,11 +33,7 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>

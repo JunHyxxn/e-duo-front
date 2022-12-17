@@ -12,8 +12,8 @@
         <v-btn plain height="100%"> 공지사항 </v-btn>
       </router-link>
       <router-link
-        v-if="userInfo.role === 'ROLE_TEACHER'"
-        to="/management-assistant"
+        v-if="userInfo != null && userInfo.role === 'ROLE_TEACHER'"
+        to="/manage-assistant"
       >
         <v-btn plain height="100%"> 조교관리 </v-btn>
       </router-link>
