@@ -8,10 +8,11 @@ function listCourses(payload, success, fail) {
         },
         params: {
             userId: payload.userId,
+            role: payload.role,
         },
     };
 
-    axios.get("/api/teacher-courses", config)
+    axios.get("/api/courses", config)
          .then(success)
          .catch(fail);
 }

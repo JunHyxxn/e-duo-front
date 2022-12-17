@@ -5,7 +5,7 @@ const courseStore = {
     state: {
         courses: [
             {
-                courseId: "XYD-LWK-KWKD",
+                courseId: "M8Yj-qkg-LnG3",
                 courseName: "2024 수능 대비 Debut 수학Ⅱ",
                 academyName: "대치명인학원 대치캠퍼스",
                 academyAddress: "서울 강남구 도곡로 408 디마크 빌딩 2층",
@@ -25,7 +25,7 @@ const courseStore = {
                 ],
             },
             {
-                courseId: "AEV-WLG-QOED",
+                courseId: "M6Gq-qkg-DnM2",
                 courseName: "2024 수능 대비 Debut 미적분",
                 academyName: "대치명인학원 대치캠퍼스",
                 academyAddress: "서울 강남구 도곡로 408 디마크 빌딩 2층",
