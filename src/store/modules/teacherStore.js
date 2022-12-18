@@ -1,6 +1,6 @@
-import { getWaitAssistant } from "@/api/assistant";
+import { getWaitAssistant } from "@/api/teacher";
 
-const assistantStore = {
+const teacherStore = {
   namespaced: true,
   state: {
     waitAssistants: [
@@ -65,7 +65,11 @@ const assistantStore = {
         (error) => console.log(error)
       );
     },
+
+    acceptHire: (context, payload) => {
+      console.log("Actions acceptHire : {}", payload);
+    },
   },
 };
 
-export default assistantStore;
+export default teacherStore;

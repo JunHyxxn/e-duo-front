@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import userStore from "@/store/modules/userStore";
 import courseStore from "@/store/modules/courseStore";
-import assistantStore from "@/store/modules/assistantStore";
+import teacherStore from "@/store/modules/teacherStore";
 
 Vue.use(Vuex);
 
@@ -14,6 +14,6 @@ export default new Vuex.Store({
   modules: {
     userStore,
     courseStore,
-    assistantStore,
+    teacherStore,
   },
 });
