@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-8" style="width: 70%">
-    <v-row class="">
+    <v-row>
       <v-col cols="10"></v-col>
       <v-col cols="1">
         <v-tooltip bottom :color="$vuetify.theme.themes.light.anchor">
@@ -40,6 +40,16 @@
       </v-col>
     </v-row>
     <router-view></router-view>
+    <v-row class="mt-8" justify="center">
+      <v-col class="me-3" cols="1">
+        <v-btn elevation="4" rounded>승인</v-btn>
+      </v-col>
+      <!-- <v-col cols="1"></v-col> -->
+
+      <v-col class="ms-3" cols="1">
+        <v-btn elevation="4" rounded>거부</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
