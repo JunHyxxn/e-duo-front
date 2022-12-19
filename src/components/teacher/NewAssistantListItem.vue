@@ -10,7 +10,7 @@
               icon
               elevation="2"
               large
-              @click="selectAssistant"
+              @click="selectAssistant(assistant.userId)"
             >
               <font-awesome-icon icon="fa-regular fa-circle-check" />
             </v-btn>
@@ -20,7 +20,7 @@
               icon
               elevation="2"
               large
-              @click="removeAssistant"
+              @click="removeAssistant(assistant.userId)"
             >
               <font-awesome-icon icon="fa-solid fa-circle-check" />
             </v-btn>
@@ -81,8 +81,9 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 const courseStore = "courseStore";
+const teacherStore = "teacherStore";
 export default {
   name: "NewAssistantListItem",
   props: {
@@ -101,18 +102,29 @@ export default {
   },
   computed: {
     ...mapState(courseStore, ["courses"]),
+    ...mapState(teacherStore, ["hireInfos"]),
   },
   methods: {
-    selectAssistant() {
+    ...mapActions(teacherStore, [
+      "addHireInfo",
+      "removeHireInfo",
+      "setAssistantCourse",
+    ]),
+    selectAssistant(assistantId) {
       this.checked = true;
+      this.addHireInfo(assistantId);
     },
-    removeAssistant() {
+    removeAssistant(assistantId) {
       this.checked = false;
+      this.removeHireInfo(assistantId);
       this.selected = [];
     },
     changeCourses() {
-      console.log(this.assistant);
-      console.log("선택된 강좌는? ", this.selected);
+      let payload = {
+        assistantId: this.assistant.userId,
+        courses: this.selected,
+      };
+      this.setAssistantCourse(payload);
     },
   },
 };

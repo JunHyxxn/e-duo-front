@@ -1,4 +1,4 @@
-import { getWaitAssistant } from "@/api/teacher";
+import { getWaitAssistant, acceptHire } from "@/api/teacher";
 
 const teacherStore = {
   namespaced: true,
@@ -28,6 +28,9 @@ const teacherStore = {
     SET_WAIT_ASSISTANTS: (state, data) => {
       state.waitAssistants = data;
     },
+    SET_HIRE_INFO: (state, data) => {
+      state.hireInfos = data;
+    },
     ADD_HIRE_INFO: (state, assistantId) => {
       state.hireInfos[assistantId] = [];
     },
@@ -41,6 +44,9 @@ const teacherStore = {
 
   actions: {
     // not use axios
+    setHireInfo: ({ commit }, payload) => {
+      commit("SET_HIRE_INFO", payload);
+    },
     addHireInfo: ({ commit }, payload) => {
       commit("ADD_HIRE_INFO", payload);
     },
@@ -52,9 +58,9 @@ const teacherStore = {
     },
 
     // use axios
-    getWaitAssistant: ({ commit }, payload) => {
+    getWaitAssistant: async ({ commit }, payload) => {
       console.log("Action getWatiAssistants : {}", payload);
-      getWaitAssistant(
+      await getWaitAssistant(
         payload,
         (response) => {
           if (response.status === 200) {
@@ -66,8 +72,59 @@ const teacherStore = {
       );
     },
 
-    acceptHire: (context, payload) => {
+    acceptHire: async ({ dispatch }, payload) => {
       console.log("Actions acceptHire : {}", payload);
+      await acceptHire(
+        payload,
+        (response) => {
+          console.log(response);
+          if (response.status === 200) {
+            dispatch("getWaitAssistant", {
+              userId: payload[0].teacherUserId,
+            });
+          }
+        },
+        async (error) => {
+          console.log(error);
+          if (error.response.status === 401) {
+            // regenerate accessToken by refreshToken
+          } else if (error.response.status === 400) {
+            // 실패
+            return;
+          } else if (error.response.status === 403) {
+            // 권한 X
+            return;
+          } else if (error.response.status === 500) {
+            // 서버 에러
+            return;
+          }
+          await acceptHire(
+            payload,
+            (response) => {
+              console.log(response);
+              if (response.status === 200) {
+                dispatch("getWaitAssistant", {
+                  userId: payload[0].teacherUserId,
+                });
+              }
+            },
+            (error) => {
+              if (error.response.status === 401) {
+                // need login
+              } else if (error.response.status === 400) {
+                // 실패
+                return;
+              } else if (error.response.status === 403) {
+                // 권한 X
+                return;
+              } else if (error.response.status === 500) {
+                // 서버 에러
+                return;
+              }
+            }
+          );
+        }
+      );
     },
   },
 };
