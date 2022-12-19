@@ -35,11 +35,11 @@
 
 <script>
 import { mapState } from "vuex";
-const assistantStore = "assistantStore";
+const teacherStore = "teacherStore";
 export default {
   name: "NoContent",
   computed: {
-    ...mapState(assistantStore, ["waitAssistants"]),
+    ...mapState(teacherStore, ["waitAssistants"]),
   },
   data() {
     return {};
