@@ -28,10 +28,19 @@ const routes = [
     ]
   },
   {
-    path: "/signup",
-    name: "SignUpForm",
-    component: () => import("@/components/user/SignUpForm.vue")
+    path: "/lecture",
+    name: "lecture",
+    component: () => import("@/views/LectureView.vue"),
+    redirect: "",
+    children: [
+      {
+        path: "manage/:courseId",
+        name: "manageLecture",
+        component: () => import("@/components/lecture/ManageLecture.vue")
+      },
+    ]
   },
+
 ]
 
 const router = new VueRouter({
