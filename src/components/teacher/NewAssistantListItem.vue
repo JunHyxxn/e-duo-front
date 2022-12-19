@@ -39,7 +39,7 @@
           </v-col>
           <v-col cols="3" align-self="center" style="text-align: center">
             <div class="text-h6 font-weight-medium">
-              {{ assistant.phone }}
+              {{ assistant.phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3") }}
             </div>
           </v-col>
           <v-col cols="5" align-self="center" style="text-align: center">
