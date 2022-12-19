@@ -58,6 +58,7 @@ export default {
       "setHireInfo",
       "getWaitAssistant",
       "acceptHire",
+      "rejectHire",
     ]),
     selectedCheck() {
       return Object.keys(this.hireInfos).length != 0;
@@ -66,6 +67,9 @@ export default {
       // object length => Object.keys(obj).length
       console.log("승인 버튼 클릭!!");
       console.log(this.hireInfos);
+      if (!confirm("📔 선택한 조교를 승인하시겠습니까?")) {
+        return;
+      }
       if (!this.selectedCheck()) {
         alert("😃 조교를 선택해주세요.");
         return;
@@ -86,7 +90,22 @@ export default {
       }
       this.acceptHire(payload);
     },
-    rejcetAssistant() {},
+    rejcetAssistant() {
+      console.log("거부 버튼 클릭!!");
+      console.log(this.hireInfos);
+      if (!confirm("📔 선택한 조교를 거부 하시겠습니까?")) {
+        return;
+      }
+      if (!this.selectedCheck()) {
+        alert("😃 조교를 선택해주세요.");
+        return;
+      }
+      let payload = {
+        teacherUserId: this.userInfo.userId,
+        assistants: Object.keys(this.hireInfos),
+      };
+      this.rejectHire(payload);
+    },
   },
 };
 </script>

@@ -14,4 +14,10 @@ async function acceptHire(payload, success, fail) {
   await api.post("/api/accept", payload).then(success).catch(fail);
 }
 
-export { getWaitAssistant, acceptHire };
+async function rejectHire(payload, success, fail) {
+  api.defaults.headers["Authorization"] =
+    "Bearer " + localStorage.getItem("access-token");
+  await api.delete("/api/reject", payload).then(success).catch(fail);
+}
+
+export { getWaitAssistant, acceptHire, rejectHire };

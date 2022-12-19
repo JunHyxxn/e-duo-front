@@ -1,4 +1,4 @@
-import { getWaitAssistant, acceptHire } from "@/api/teacher";
+import { getWaitAssistant, acceptHire, rejectHire } from "@/api/teacher";
 
 const teacherStore = {
   namespaced: true,
@@ -109,9 +109,60 @@ const teacherStore = {
               }
             },
             (error) => {
-              if (error.response.status === 401) {
-                // need login
-              } else if (error.response.status === 400) {
+              if (error.response.status === 400) {
+                // 실패
+                return;
+              } else if (error.response.status === 403) {
+                // 권한 X
+                return;
+              } else if (error.response.status === 500) {
+                // 서버 에러
+                return;
+              }
+            }
+          );
+        }
+      );
+    },
+
+    rejectHire: async ({ dispatch }, payload) => {
+      console.log(payload);
+      await rejectHire(
+        payload,
+        (response) => {
+          console.log(response);
+          if (response.status === 200) {
+            dispatch("getWaitAssistant", {
+              userId: payload.teacherUserId,
+            });
+          }
+        },
+        async (error) => {
+          console.log(error);
+          if (error.response.status === 401) {
+            // regenerate accessToken by refreshToken
+          } else if (error.response.status === 400) {
+            // 실패
+            return;
+          } else if (error.response.status === 403) {
+            // 권한 X
+            return;
+          } else if (error.response.status === 500) {
+            // 서버 에러
+            return;
+          }
+          await rejectHire(
+            payload,
+            (response) => {
+              console.log(response);
+              if (response.status === 200) {
+                dispatch("getWaitAssistant", {
+                  userId: payload.teacherUserId,
+                });
+              }
+            },
+            (error) => {
+              if (error.response.status === 400) {
                 // 실패
                 return;
               } else if (error.response.status === 403) {
