@@ -1,25 +1,19 @@
 <template>
-  <v-container style="max-width: 450px" fill-height>
-    <v-layout align-center row wrap>
-      <v-flex xs12>
-        <v-card class="pt-3 mb-5">
-          <v-list-item-title class="text-h4 mb-2 ms-3">
-            강의 목록
-          </v-list-item-title>
-          <v-divider></v-divider>
-          <v-list-item>
-            <v-list-item-content>
-              <lecture-info
-                v-for="(item, index) in lectures"
-                :key="index"
-                :lecture="item"
-              ></lecture-info>
-              <v-icon large>mdi-plus-circle-outline</v-icon>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-flex>
-    </v-layout>
+  <v-container>
+    <div class="d-flex justify-center my-4">
+      <h1>강의 목록</h1>
+    </div>
+    <v-container>
+      <lecture-info
+        v-for="(item, index) in lectures"
+        :key="index"
+        :lecture="item"
+        @updateLectures="loadLectureList"
+      ></lecture-info>
+    </v-container>
+    <div class="d-flex justify-center my-4">
+      <v-icon large @click="moveAddLecture">mdi-plus-circle-outline</v-icon>
+    </div>
   </v-container>
 </template>
 
@@ -59,18 +53,26 @@ export default {
     };
   },
   // created() {
-  //   let courseId = this.$route.params.coureseId;
-  //   this.lectures = loadCourseLectures(
-  //     courseId,
-  //     ({ data }) => {
-  //       console.log(data);
-  //       this.lectures = data;
-  //     },
-  //     (err) => {
-  //       console.log(err);
-  //     }
-  //   );
+  //  this.loadLectureList();
   // },
+  methods: {
+    loadLectureList() {
+      //   let courseId = this.$route.params.coureseId;
+      //   this.lectures = loadCourseLectures(
+      //     courseId,
+      //     ({ data }) => {
+      //       console.log(data);
+      //       this.lectures = data;
+      //     },
+      //     (err) => {
+      //       console.log(err);
+      //     }
+      //   );
+    },
+    moveAddLecture() {
+      // 강의 추가 페이지로 이동
+    },
+  },
 };
 </script>
 

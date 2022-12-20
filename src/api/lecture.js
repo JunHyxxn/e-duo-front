@@ -6,4 +6,8 @@ async function loadCourseLectures(courseId, success, fail) {
   await api.get(`/api/lecture/${courseId}`).then(success).catch(fail);
 } 
 
-export {loadCourseLectures}
+async function deleteLecture(lectureId, success, fail) {
+  await api.delete(`api/lecture/${lectureId}`).then(success).catch(fail);
+}
+
+export { loadCourseLectures, deleteLecture }
