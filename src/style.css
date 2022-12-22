@@ -1,0 +1,80 @@
+.row{
+    justify-content: center;
+}
+.modal-background{
+    background-color: rgba(0,0,0,0.3);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.school-modal-container{
+    width: 50vw;
+    min-width: 500px;
+    position: absolute;
+    top: 100px;
+    left: calc(50% - 25vw);
+    /* background-color: white; */
+    box-shadow: 1px 2px 4px rgba(0,0,0,0.1);
+}
+.school-list-container{
+    max-height: 400px;
+    overflow-y: scroll;
+}
+#virtual-scroll-table {
+    max-height: 400px;
+    overflow: auto;
+}
+
+
+
+
+.custom-picker {
+    border-radius: 10px !important;
+}
+.custom-picker.v-btn--active.green {
+    background-color: #edffff !important;
+    
+}
+.custom-picker.v-btn--active.green.v-btn__content {
+    color: #00b1bb !important;
+    font-weight: bold !important;
+
+}
+.custom-picker.v-picker__title {
+    display: none !important;
+}
+.custom-picker.v-date-picker-header {
+    padding-top: 10px !important;
+
+}
+.v-date-picker-table thead tr th {
+    color: #1c1c1c !important;
+    font-weight: 400 !important;
+}
+.v-date-picker-table thead tr th:nth-child(1) {
+    color: #ff7451 !important;
+}
+
+.v-date-picker-table thead tr th:nth-child(7) {
+    color: #ff7451 !important;
+}
+
+        
+.v-date-picker-table tbody tr td:nth-child(1).v-btn--disabled.v-btn__content {
+    color: #ffcbbe;
+}
+
+.v-date-picker-table tbody tr td:nth-child(1).v-btn__content {
+    color: #ff7451;
+}
+        
+.v-date-picker-table tbody tr td:nth-child(7).v-btn--disabled.v-btn__content {
+    color: #ffcbbe;
+}
+
+
+.v-date-picker-table tbody tr td:nth-child(7).v-btn__content {
+color: #ff7451;
+}
