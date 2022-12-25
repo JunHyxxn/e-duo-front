@@ -70,6 +70,11 @@ const routes = [
         name: "addCourse",
         component: () => import("@/components/course/AddCourse.vue"),
       }, // 이후 추가할 강좌관련 컴포넌트는 여기에 추가
+      {
+        path: "student/detail",
+        name: "courseStudentDetail",
+        component: () => import("@/components/course/CourseStudentDetail.vue"),
+      },
     ],
   },
   {
