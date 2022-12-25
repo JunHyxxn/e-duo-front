@@ -10,6 +10,8 @@ import {
   faPeopleLine,
   faCircleCheck,
   faUserGroup,
+  faCirclePlus,
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -19,6 +21,8 @@ library.add(
   faPeopleLine,
   faCircleCheck,
   faCheckCircle,
-  faUserGroup
+  faUserGroup,
+  faCirclePlus,
+  faTrashCan
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
