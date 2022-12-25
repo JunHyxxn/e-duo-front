@@ -2,7 +2,7 @@
   <v-app>
     <the-header></the-header>
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
     <the-footer></the-footer>
   </v-app>
@@ -12,7 +12,7 @@
 import TheFooter from "@/components/TheFooter.vue";
 import TheHeader from "@/components/TheHeader.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: { TheFooter, TheHeader },
   data: () => ({
     //
