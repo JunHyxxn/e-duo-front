@@ -22,9 +22,17 @@
               {{ $refs.calendar.title }}
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            총 출석률 : 98%
+            총 출석률 : {{ getTotalAttendanceRate }} %
             <v-spacer></v-spacer>
-            이번 달 출석률 : 79%
+            <div v-if="$refs.calendar">
+              {{ $refs.calendar.lastEnd.month }}월 출석률 :
+              {{
+                getThisMonthAttendanceRate({
+                  startDate: $refs.calendar.lastStart.date,
+                  endDate: $refs.calendar.lastEnd.date,
+                })
+              }}%
+            </div>
           </v-toolbar>
         </v-sheet>
         <v-sheet height="450">
@@ -32,7 +40,7 @@
             ref="calendar"
             v-model="focus"
             color="primary"
-            :events="events"
+            :events="getEvents"
             :type="type"
             @click:event="showEvent"
             @click:date="viewDay"
@@ -64,6 +72,8 @@
   </v-card>
 </template>
 <script>
+import { mapGetters } from "vuex";
+const studentStore = "studentStore";
 export default {
   name: "StudentAttendanceInfo",
   data() {
@@ -73,59 +83,24 @@ export default {
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
-      events: [
-        // events => getters 로 만들어줘야한다.
-        {
-          name: "출석",
-          start: new Date("2022-12-24"),
-          end: new Date("2022-12-24"),
-          color: "green",
-          timed: false,
-        },
-        {
-          name: "결석",
-          start: new Date("2022-12-22"),
-          end: new Date("2022-12-22"),
-          color: "red",
-          timed: false,
-        },
-        {
-          name: "과제 제출",
-          start: new Date("2022-12-22"),
-          end: new Date("2022-12-22"),
-          color: "blue",
-          timed: false,
-        },
-        {
-          name: "과제 없음",
-          start: new Date("2022-12-25"),
-          end: new Date("2022-12-25"),
-          color: "brown",
-          timed: false,
-        },
-        {
-          name: "과제 미제출",
-          start: new Date("2022-12-15"),
-          end: new Date("2022-12-15"),
-          color: "pink",
-          timed: false,
-        },
-      ],
-      // colors: [
-      //   "blue",
-      //   "indigo",
-      //   "deep-purple",
-      //   "cyan",
-      //   "green",
-      //   "orange",
-      //   "grey darken-1",
-      // ],
-      // names: ["출석", "결석", "과제 완료", "과제 없음", "과제 미완료"],
     };
+  },
+  created() {
+    // this.getAttendanceList({
+    //   userId: "학생Id",
+    //   courseId: "courseId"
+    // });
   },
   mounted() {
     this.$refs.calendar.checkChange();
     this.focus = new Date();
+  },
+  computed: {
+    ...mapGetters(studentStore, [
+      "getEvents",
+      "getTotalAttendanceRate",
+      "getThisMonthAttendanceRate",
+    ]),
   },
   methods: {
     viewDay({ date }) {

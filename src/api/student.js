@@ -8,10 +8,11 @@ async function getStudentDetail(payload, success, fail) {
   await api.post("/api/students/detail", payload).then(success).catch(fail);
 }
 
-// async function getWaitAssistant(payload, success, fail) {
-//   api.defaults.headers["Authorization"] =
-//     "Bearer " + localStorage.getItem("access-token");
-//   await api.post("/api/wait-assistant", payload).then(success).catch(fail);
-// }
+// method & url 변경 예정
+async function getAttendanceList(payload, success, fail) {
+  api.defaults.headers["Authorization"] =
+    "Bearer " + localStorage.getItem("access-token");
+  await api.get("/api/sugang", payload).then(success).catch(fail);
+}
 
-export { getStudentDetail };
+export { getStudentDetail, getAttendanceList };
