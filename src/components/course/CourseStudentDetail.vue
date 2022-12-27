@@ -1,5 +1,15 @@
 <template>
-  <v-container>
+  <v-container class="mt-8" style="width: 80%">
+    <v-row>
+      <v-list-item two-line>
+        <v-list-item-content>
+          <v-list-item-title class="text-h4">
+            Spring Boot & React 강좌</v-list-item-title
+          >
+          <v-list-item-subtitle class="text-h5"> SSAFY</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-row>
     <student-basic-info></student-basic-info>
     <student-attendance-info></student-attendance-info>
     <student-exam-info></student-exam-info>
@@ -21,6 +31,10 @@ export default {
     StudentExamInfo,
     StudentVideoInfo,
     StudentIssueInfo,
+  },
+  props: {
+    courseId: String,
+    studentId: String,
   },
 };
 </script>
