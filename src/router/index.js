@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -24,7 +24,7 @@ const routes = [
         name: "UserRole",
         component: () => import("@/components/user/UserRole.vue"),
       },
-    ]
+    ],
   },
   {
     path: "/lecture",
@@ -40,19 +40,19 @@ const routes = [
     ]
   },
   {
-    path: '/signupteacher',
-    name: 'SignUpBasicTeacher',
-    component: () => import('@/components/user/SignUpBasicTeacher.vue')
+    path: "/signupteacher",
+    name: "SignUpBasicTeacher",
+    component: () => import("@/components/user/SignUpBasicTeacher.vue"),
   },
   {
-    path: '/signupassistant',
-    name: 'SignUpBasicAssistant',
-    component: () => import('@/components/user/SignUpBasicAssistant.vue')
+    path: "/signupassistant",
+    name: "SignUpBasicAssistant",
+    component: () => import("@/components/user/SignUpBasicAssistant.vue"),
   },
   {
-    path: '/signupstudent',
-    name: 'SignUpBasicStudent',
-    component: () => import('@/components/user/SignUpBasicStudent.vue')
+    path: "/signupstudent",
+    name: "SignUpBasicStudent",
+    component: () => import("@/components/user/SignUpBasicStudent.vue"),
   },
   {
     path: "/course",
@@ -63,14 +63,14 @@ const routes = [
       {
         path: "list",
         name: "courseList",
-        component: () => import("@/components/course/CourseList.vue")
+        component: () => import("@/components/course/CourseList.vue"),
       },
       {
         path: "add",
         name: "addCourse",
-        component: () => import("@/components/course/AddCourse.vue")
-      },  // 이후 추가할 강좌관련 컴포넌트는 여기에 추가
-    ]
+        component: () => import("@/components/course/AddCourse.vue"),
+      }, // 이후 추가할 강좌관련 컴포넌트는 여기에 추가
+    ],
   },
   {
     path: "/notice",
@@ -86,8 +86,8 @@ const routes = [
       {
         path: "detail/:courseName",
         name: "courseDetail",
-        component: () => import("@/components/course/CourseDetail")
-      }
+        component: () => import("@/components/course/CourseDetail"),
+      },
     ],
   },
   {
@@ -110,10 +110,28 @@ const routes = [
     name: "test",
     component: () => import("@/views/AppTest.vue"),
   },
-]
+  {
+    path: "/manage-assistant",
+    name: "manageAssistant",
+    component: () => import("@/views/AppManageAssistant.vue"),
+    redirect: "/manage-assistant/new",
+    children: [
+      {
+        path: "new",
+        name: "newAssistant",
+        component: () => import("@/components/teacher/NewAssistantList.vue"),
+      },
+      {
+        path: "manage",
+        name: "originAssistant",
+        component: () => import("@/components/teacher/ManageAssistantList.vue"),
+      },
+    ],
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
