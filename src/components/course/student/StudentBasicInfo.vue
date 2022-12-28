@@ -1,45 +1,54 @@
 <template lang="">
-  <v-card elevation="4" class="col-12 mt-8 pa-0 ma-0">
-    <v-card-text>
-      <v-row align-content="center" justify="center">
-        <v-col align-self="center" style="text-align: center">
-          <v-row>
-            <div class="text-h6 font-weight-medium mb-2">
-              {{ studentInfo.name }}
+  <v-container class="mt-8">
+    <v-chip class="mb-5" large> 기본 정보 </v-chip>
+    <v-card elevation="4" class="col-12 pa-0 ma-0">
+      <v-card-text>
+        <v-row align-content="center" justify="center">
+          <v-col align-self="center" style="text-align: center">
+            <v-row>
+              <div class="text-h6 font-weight-medium mb-2">
+                {{ studentInfo.name }}
+              </div>
+            </v-row>
+            <v-row>
+              <div class="grey--text text-caption">
+                {{ studentInfo.birthDate }}
+              </div>
+            </v-row>
+          </v-col>
+          <v-col align-self="center" style="text-align: center">
+            <div class="text-h6 font-weight-medium">
+              {{ studentInfo.schoolName }} {{ studentInfo.grade }}학년
             </div>
-          </v-row>
-          <v-row>
-            <div class="grey--text text-caption">
-              {{ studentInfo.birthDate }}
+          </v-col>
+          <v-col align-self="center" style="text-align: center">
+            {{ studentInfo.phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3") }}
+          </v-col>
+        </v-row>
+        <v-divider class="mt-5 mb-5"></v-divider>
+        <v-row>
+          <v-col align-self="center" style="text-align: center">
+            함께한 기간 : {{ calcDiff() }}
+          </v-col>
+          <v-col align-self="center" style="text-align: center">
+            <div class="text-h6 font-weight-medium">
+              {{ studentInfo.parent }}
             </div>
-          </v-row>
-        </v-col>
-        <v-col align-self="center" style="text-align: center">
-          <div class="text-h6 font-weight-medium">
-            {{ studentInfo.schoolName }} {{ studentInfo.grade }}학년
-          </div>
-        </v-col>
-        <v-col align-self="center" style="text-align: center">
-          {{ studentInfo.phone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3") }}
-        </v-col>
-      </v-row>
-      <v-divider class="mt-5 mb-5"></v-divider>
-      <v-row>
-        <v-col align-self="center" style="text-align: center">
-          함께한 기간 : {{ calcDiff() }}
-        </v-col>
-        <v-col align-self="center" style="text-align: center">
-          <div class="text-h6 font-weight-medium">{{ studentInfo.parent }}</div>
-        </v-col>
-        <v-col align-self="center" style="text-align: center">
-          {{
-            studentInfo.parentPhone.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
-          }}
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+          </v-col>
+          <v-col align-self="center" style="text-align: center">
+            {{
+              studentInfo.parentPhone.replace(
+                /(\d{3})(\d{4})(\d{4})/,
+                "$1-$2-$3"
+              )
+            }}
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
+
 <script>
 import { mapState } from "vuex";
 let studentStore = "studentStore";

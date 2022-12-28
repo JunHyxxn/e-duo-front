@@ -1,5 +1,7 @@
 <template lang="">
-  <div>Student Exam Info</div>
+  <v-container class="mt-8">
+    <v-chip class="mb-5" large> 성적 조회 </v-chip>
+  </v-container>
 </template>
 <script>
 export default {
