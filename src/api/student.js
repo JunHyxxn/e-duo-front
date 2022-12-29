@@ -15,4 +15,9 @@ async function getAttendanceList(payload, success, fail) {
   await api.get("/api/sugang", payload).then(success).catch(fail);
 }
 
-export { getStudentDetail, getAttendanceList };
+async function getScoreList(payload, success, fail) {
+  api.defaults.headers["Authorization"] =
+    "Bearer " + localStorage.getItem("access-token");
+  await api.get("/api/score", payload).then(success).catch(fail);
+}
+export { getStudentDetail, getAttendanceList, getScoreList };

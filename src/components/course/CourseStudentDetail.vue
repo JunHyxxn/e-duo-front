@@ -10,10 +10,15 @@
         </v-list-item-content>
       </v-list-item>
     </v-row>
+    <v-divider class="mt-8"></v-divider>
     <student-basic-info></student-basic-info>
+    <v-divider class="mt-8"></v-divider>
     <student-attendance-info></student-attendance-info>
+    <v-divider class="mt-8"></v-divider>
     <student-exam-info></student-exam-info>
+    <v-divider class="mt-8"></v-divider>
     <student-video-info></student-video-info>
+    <v-divider class="mt-8"></v-divider>
     <student-issue-info></student-issue-info>
   </v-container>
 </template>
